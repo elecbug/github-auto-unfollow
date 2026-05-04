@@ -15,7 +15,7 @@ def get_info():
 
             return username, headers
     except Exception as e:
-        print(f"Error: {e}")
+        raise Exception(f"Error reading NAME_AND_TOKEN file: {e}")
 
 # Function to get all items from paginated GitHub API endpoints
 def get_all_items(url, headers):
@@ -65,6 +65,7 @@ def get_whitelist():
             return whitelist
     except Exception as e:
         print(f"Error reading whitelist: {e}")
+        print("Proceeding with an empty whitelist")
         return []
 
 # Function to filter out users who are not following back, excluding whitelisted users and organizations
