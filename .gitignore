@@ -1,0 +1,5 @@
+# Name and token file for GitHub API authentication
+NAME_AND_TOKEN
+
+# Whitelist file for users that should not be unfollowed even if they are not following back
+WHITELIST
