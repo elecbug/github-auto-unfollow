@@ -98,6 +98,25 @@ def unfollow_user(username_to_unfollow, headers):
         print(f"Failed to unfollow {username_to_unfollow}: {response.status_code}, {response.text}")
         return False
 
+# Function to process the list of users not following back and prompt for confirmation before unfollowing each user
+def process(checked_list, headers):
+    for user in checked_list:
+        while True:
+            confirm = input(f"{user} Unfollow? (y(es)/n(o)/q(uit)): ").strip().lower()
+
+            if confirm == 'q' or confirm == 'quit':
+                print("Quitted")
+                return
+            elif confirm == 'y' or confirm == 'yes':
+                unfollow_user(user, headers)
+                break
+            elif confirm == 'n' or confirm == 'no':
+                print(f"Skipped: {user}")
+                break
+            else:
+                print("Invalid input, Required input: y(es)/n(o)/q(uit)")
+                continue
+
 def main():
     # Get username and headers for authentication
     username, headers = get_info()
@@ -124,16 +143,7 @@ def main():
     print("Users not following me back:", checked_list)
 
     # Prompt user for confirmation before unfollowing each user
-    for user in checked_list:
-        confirm = input(f"{user} Unfollow? (y(es)/n(o)/q(uit)): ").strip().lower()
-
-        if confirm == 'y':
-            unfollow_user(user, headers)
-        elif confirm == 'q':
-            print("Quitted")
-            break
-        else:
-            print(f"Skipped: {user}")
+    process(checked_list, headers)
 
 if __name__ == "__main__":
     main()
